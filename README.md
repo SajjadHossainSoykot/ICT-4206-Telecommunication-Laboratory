@@ -28,62 +28,84 @@ The course bridges communication theory with practical programming and simulatio
 
 ---
 
-# 🧪 Laboratory Experiments
+# 🧪 Laboratory Experiments & Roadmap
 
-This repository includes implementations and simulations of the following laboratory experiments:
+Below is the status of the experiments mapped to this course. You can access completed implementations directly using the file links below, or use the [How to Add a New Experiment](#-how-to-add-a-new-experiment) guide to add new experiments.
 
-### 1. Signal Generation and Analysis
-- Generation of sine, cosine, square, and triangular signals
-- Time-domain visualization
-- Frequency-domain analysis
-
-### 2. Sampling and Reconstruction
-- Verification of the Sampling Theorem
-- Under-sampling and over-sampling
-- Signal reconstruction
-
-### 3. Pulse Code Modulation (PCM)
-- Sampling
-- Quantization
-- Binary Encoding
-- PCM Transmission
-- Signal Reconstruction
-
-### 4. Delta Modulation (DM)
-- Delta Modulator implementation
-- Slope overload distortion
-- Granular noise analysis
-
-### 5. Adaptive Delta Modulation (ADM)
-- Variable step-size modulation
-- Performance comparison with conventional DM
-
-### 6. Analog Modulation Techniques
-- Amplitude Modulation (AM)
-- Frequency Modulation (FM)
-- Phase Modulation (PM)
-
-### 7. Digital Communication Experiments
-- Digital signal transmission
-- Basic channel analysis
-- Bit error observations
-
-### 8. Communication System Performance Analysis
-- Noise effects
-- Signal quality comparison
-- Performance evaluation using simulation
+| Exp No. | Experiment Title | Status | Python Code | Jupyter Notebook |
+| :---: | :--- | :---: | :---: | :---: |
+| **1** | **Pulse Code Modulation (PCM)** | 🟢 Completed | [Exp1_PCM.py](file:///Users/macbookair/Desktop/Disk%20Sajjad/IU%20ICT%202020-21/Academic%20Files/4th%20Year%202nd%20Semester/ICT-4206%20Telecommunication%20Laboratory/LabCodes/Exp1_PCM.py) | [Exp1_PCM.ipynb](file:///Users/macbookair/Desktop/Disk%20Sajjad/IU%20ICT%202020-21/Academic%20Files/4th%20Year%202nd%20Semester/ICT-4206%20Telecommunication%20Laboratory/LabCodes/Exp1_PCM.ipynb) |
+| **2** | **Signal Generation and Analysis** | ⚪ Planned | — | — |
+| **3** | **Sampling and Reconstruction** | ⚪ Planned | — | — |
+| **4** | **Delta Modulation (DM)** | ⚪ Planned | — | — |
+| **5** | **Adaptive Delta Modulation (ADM)** | ⚪ Planned | — | — |
+| **6** | **Analog Modulation Techniques** | ⚪ Planned | — | — |
+| **7** | **Digital Communication Experiments** | ⚪ Planned | — | — |
+| **8** | **Communication System Performance Analysis** | ⚪ Planned | — | — |
 
 ---
 
-# 📂 Repository Contents
+# 📂 Repository Structure
 
-- 📓 Jupyter Notebook (`.ipynb`) files
-- 💻 Python (`.py`) implementations
-- 📊 Simulation graphs and plots
-- 📈 Signal waveform visualizations
-- 🧾 Laboratory reports and explanations
-- 📚 MATLAB (`.m`) implementations (where applicable)
-- 🔍 Step-by-step experimental analysis
+```
+LabCodes/
+├── .gitignore
+├── LICENSE
+├── NOTICE
+├── README.md
+├── Exp1_PCM.py          # Python implementation of Pulse Code Modulation
+├── Exp1_PCM.ipynb       # Jupyter Notebook for Pulse Code Modulation simulation
+└── Exp1_PCM.png         # Waveform visualization plot for PCM
+```
+
+---
+
+# ➕ How to Add a New Experiment
+
+Follow these structured steps to add a new laboratory experiment to this repository:
+
+### 1️⃣ File Naming Convention
+Save your new code files in the root directory using the following names:
+* **Python Script:** `Exp[Number]_[ShortName].py` (e.g., `Exp2_Sampling.py`)
+* **Jupyter Notebook:** `Exp[Number]_[ShortName].ipynb` (e.g., `Exp2_Sampling.ipynb`)
+
+### 2️⃣ Recommended Code Template
+To keep the codebase uniform, use this standard structure for Python experiment scripts:
+
+```python
+import numpy as np
+import matplotlib.pyplot as plt
+
+# --- 1. Signal Parameters ---
+a = 4          # Amplitude
+fm = 2         # Message Frequency (Hz)
+fs = 100 * fm  # Sampling Frequency (Hz)
+
+# --- 2. Signal Generation ---
+t = np.arange(0, 1 + 1/fs, 1/fs)
+x = a * np.sin(2 * np.pi * fm * t)
+
+# --- 3. Processing / Simulation Logic ---
+# (Implement modulation, filtering, or transmission simulation here)
+
+# --- 4. Plotting Results ---
+plt.figure(figsize=(10, 6))
+plt.plot(t, x)
+plt.title("Message Signal")
+plt.xlabel("Time (s)")
+plt.ylabel("Amplitude")
+plt.grid(True)
+plt.tight_layout()
+plt.show()
+```
+
+### 3️⃣ Update the Roadmap Table
+After committing your new files, update the **[Laboratory Experiments & Roadmap](#-laboratory-experiments--roadmap)** section of this README:
+1. Change the Status of the experiment from `⚪ Planned` to `🟢 Completed`.
+2. Link the Python and Jupyter files in the table using Markdown:
+   ```markdown
+   [Exp2_Sampling.py](file:///Users/macbookair/Desktop/Disk%20Sajjad/IU%20ICT%202020-21/Academic%20Files/4th%20Year%202nd%20Semester/ICT-4206%20Telecommunication%20Laboratory/LabCodes/Exp2_Sampling.py)
+   ```
 
 ---
 
@@ -168,8 +190,8 @@ You are free to use, modify, and distribute this project under the terms of the 
 
 You **must**:
 
-- Retain the LICENSE file
-- Retain the NOTICE file
+- Retain the [LICENSE](file:///Users/macbookair/Desktop/Disk%20Sajjad/IU%20ICT%202020-21/Academic%20Files/4th%20Year%202nd%20Semester/ICT-4206%20Telecommunication%20Laboratory/LabCodes/LICENSE) file
+- Retain the [NOTICE](file:///Users/macbookair/Desktop/Disk%20Sajjad/IU%20ICT%202020-21/Academic%20Files/4th%20Year%202nd%20Semester/ICT-4206%20Telecommunication%20Laboratory/LabCodes/NOTICE) file
 - Provide proper attribution to the original author
 
 Failure to comply with these terms violates the license.
