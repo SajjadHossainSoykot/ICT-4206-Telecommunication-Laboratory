@@ -2,43 +2,74 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+# 1. Generate Original Message Signal
 A, fm, fs = 4, 2, 200
 t = np.arange(fs + 1) / fs
 x = A * np.sin(2 * np.pi * fm * t)
 
+# 2. Quantization (8 levels = 3 bits)
 levels = np.arange(-3.5, 4, 1)
-index = np.clip(np.ceil(x + 4).astype(int), 1, 8) - 1
-quantized = levels[index]
-words = np.array([[int(b) for b in f"{v:03b}"] for v in index])
-bits = words.ravel()
-decoded = levels[words @ np.array([4, 2, 1])]
+index = np.ceil(x + 4).astype(int) - 1
+index = np.clip(index, 0, 7)
+xq = levels[index]
 
-# Manual: sixth-order Butterworth; first-order fallback without SciPy
+# 3. PCM Encoding (Decimal to 3-bit Binary)
+codes = [format(i, '03b') for i in index]
+bits = [int(b) for code in codes for b in code]
+
+# 4. PCM Decoding (Binary to Quantized Values)
+decoded = np.array([levels[int(code, 2)] for code in codes])
+
+# 5. (Optional) Signal Reconstruction using Low-Pass Filter 
 try:
+    # Sixth-order Butterworth LPF (if SciPy is installed)
     from scipy.signal import butter, lfilter
+
     b, a = butter(6, 4*fm/fs)
     reconstructed = lfilter(b, a, decoded)
-    print('LPF: sixth-order Butterworth (matches manual)')
+    print("Using Butterworth Low-Pass Filter")
+
 except ImportError:
-    alpha = 1 - np.exp(-2 * np.pi * (2*fm) / fs)
+    # (Optional) Simple first-order LPF (without SciPy)
+    alpha = 1 - np.exp(-2*np.pi*(2*fm)/fs)
     reconstructed = np.zeros_like(decoded)
-    for k in range(len(decoded)):
-        reconstructed[k] = alpha*decoded[k] + (1-alpha)*(reconstructed[k-1] if k else 0)
-    print('LPF: simple first-order fallback (no SciPy)')
 
-print('First 12 PCM words:', ' '.join(''.join(map(str, w)) for w in words[:12]))
-print('Sampling rate:', fs, 'Hz; PCM bit rate:', 3*fs, 'bits/s')
-print('Quantization MSE:', round(np.mean((x-quantized)**2), 4))
+    for i in range(len(decoded)):
+        previous = reconstructed[i-1] if i > 0 else 0
+        reconstructed[i] = alpha*decoded[i] + (1-alpha)*previous
 
+    print("Using Simple Low-Pass Filter")
+
+# 6. Display Results
+print("First 10 PCM Codes:", codes[:10])
+print("PCM Bit Rate:", 3*fs, "bits/s")
+
+# 7. Plot All Waveforms
 fig, ax = plt.subplots(3, 2, figsize=(11, 8))
-ax[0, 0].plot(t, x); ax[0, 0].set_title('Original message')
-ax[0, 1].stem(t, x, markerfmt='.'); ax[0, 1].set_title('Sampled message')
-ax[1, 0].step(t, quantized); ax[1, 0].set_title('Quantized signal')
-ax[1, 1].step(np.arange(60), bits[:60]); ax[1, 1].set_title('PCM bits (first 60)')
-ax[2, 0].step(t, decoded); ax[2, 0].set_title('Decoded signal')
-ax[2, 1].plot(t, x, 'k--', label='Original')
-ax[2, 1].plot(t, reconstructed, label='Reconstructed')
-ax[2, 1].legend(); ax[2, 1].set_title('Reconstructed (LPF)')
-for a in ax.flat: a.grid(True); a.set_xlabel('Time / sample / bit index')
-fig.tight_layout()
+
+ax[0, 0].plot(t, x)
+ax[0, 0].set_title("Original Message Signal")
+
+ax[0, 1].stem(t, x, markerfmt='.')
+ax[0, 1].set_title("Sampled Signal")
+
+ax[1, 0].step(t, xq)
+ax[1, 0].set_title("Quantized Signal")
+
+ax[1, 1].step(range(60), bits[:60])
+ax[1, 1].set_title("PCM Encoded Bits")
+
+ax[2, 0].step(t, decoded)
+ax[2, 0].set_title("Decoded Signal")
+
+ax[2, 1].plot(t, x, 'k--', label="Original")
+ax[2, 1].plot(t, reconstructed, label="Reconstructed")
+ax[2, 1].legend()
+ax[2, 1].set_title("Reconstructed Signal (LPF)")
+
+# 8. Graph Formatting
+for axis in ax.flat:
+    axis.grid(True)
+
+plt.tight_layout()
 plt.show()
