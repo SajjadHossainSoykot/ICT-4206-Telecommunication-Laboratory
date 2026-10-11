@@ -64,7 +64,8 @@ LabCodes/
 │   ├── Exp7_FHSS.py
 │   ├── Exp7_FHSS.ipynb
 │   ├── Exp12_ConvolutionalCodes.py
-│   └── Exp12_ConvolutionalCodes.ipynb
+│   ├── Exp12_ConvolutionalCodes.ipynb
+│   └── Telecom_Lab_All_Experiments.ipynb  # Master notebook combining all 4 experiments
 │
 ├── Expected_Outputs/                      # Reference simulation waveforms for all experiments
 │   ├── Exp1_PCM_Output.png
@@ -226,7 +227,8 @@ matlab -batch "run('Exp1_PCM.m')"
    cd "Python"
    jupyter notebook
    ```
-   Open any `.ipynb` file to interact with interactive widgets, formulas, and plotted waveforms.
+   - Open individual notebooks (`Exp1_PCM.ipynb`, `Exp6_DSSS.ipynb`, `Exp7_FHSS.ipynb`, `Exp12_ConvolutionalCodes.ipynb`) for focused study.
+   - Or open **`Telecom_Lab_All_Experiments.ipynb`** to access and execute all 4 experiments together in a single master workbook with pre-rendered waveforms and a complete viva cheatsheet.
 
 ---
 
