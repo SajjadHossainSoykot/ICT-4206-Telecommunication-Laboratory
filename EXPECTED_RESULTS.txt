@@ -1,0 +1,24 @@
+Telecommunication Lab Exam - Expected core results
+
+Exp 1 PCM:
+  amplitude 4, message frequency 2 Hz, sampling 200 Hz
+  8 levels => 3 bits per sample => demo PCM bit rate 600 bits/s
+  first 12 codes: 011 100 100 100 100 101 101 101 101 110 110 110
+  reconstructed signal resembles sine, not exactly identical to analog input
+
+Exp 6 DSSS:
+  binary data 101, PN 0010111
+  received 101; processing gain 7 = 8.45 dB
+  3 plots: spread baseband, carrier, DSSS-BPSK
+
+Exp 7 FHSS:
+  binary data 1011001011
+  chosen hops (cycles per bit): 24 3 6 1 4 12 2 24 2 6
+  recovered 1011001011
+  4 plots: original polar bits, BPSK, hopping carrier, FHSS signal
+
+Exp 12 Convolutional:
+  input 1011; added tail 00 -> 101100
+  output pairs: 11 10 00 01 01 11
+  serial encoded bits: 111000010111
+  rate 1/2, constraint length 3, two delay elements
