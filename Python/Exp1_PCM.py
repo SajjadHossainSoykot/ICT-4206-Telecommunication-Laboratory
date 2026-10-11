@@ -57,7 +57,7 @@ ax[1, 0].step(t, xq)
 ax[1, 0].set_title("Quantized Signal")
 
 ax[1, 1].step(range(60), bits[:60])
-ax[1, 1].set_title("PCM Encoded Bits")
+ax[1, 1].set_title("PCM Encoded Bits (First 60)")
 
 ax[2, 0].step(t, decoded)
 ax[2, 0].set_title("Decoded Signal")
